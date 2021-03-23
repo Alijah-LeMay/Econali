@@ -1,5 +1,5 @@
-import React from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
+import React from 'react'
+import { Container, Row, Col } from 'react-bootstrap'
 
 const Footer = () => {
   return (
@@ -7,15 +7,12 @@ const Footer = () => {
       <Container>
         <Row>
           <Col className='text-center py-3'>
-            Copyright &copy; 2020{' '}
-            <a target='_blank' href='//www.thewebdev.net'>
-              LemaTech LLC
-            </a>
+            Copyright &copy; 2020 <a href='//www.thewebdev.net'>LemaTech LLC</a>
           </Col>
         </Row>
       </Container>
     </footer>
-  );
-};
+  )
+}
 
-export default Footer;
+export default Footer

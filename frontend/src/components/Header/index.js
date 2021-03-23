@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, withRouter } from 'react-router-dom'
 // BootStrap
 import { Container, Navbar, Nav, NavDropdown } from 'react-bootstrap'
 import { LinkContainer } from 'react-router-bootstrap'
@@ -11,13 +11,15 @@ import { logout } from '../../store/actions/userActions'
 // My Components
 import SearchBox from '../SearchBox'
 
-const Header = () => {
+const Header = (props) => {
+  const { history } = props
   const dispatch = useDispatch()
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   const logoutHandler = () => {
     dispatch(logout())
+    history.push('/')
   }
 
   return (
@@ -73,4 +75,4 @@ const Header = () => {
   )
 }
 
-export default Header
+export default withRouter(Header)
