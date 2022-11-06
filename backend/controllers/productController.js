@@ -21,7 +21,12 @@ const getProducts = asyncHandler(async (req, res) => {
     .limit(pageSize)
     .skip(pageSize * (page - 1))
 
-  res.json({ products, page, pages: Math.ceil(count / pageSize) })
+  if (products) {
+    res.json({ products, page, pages: Math.ceil(count / pageSize) })
+  } else {
+    res.status(404)
+    throw new Error('ProductS not found')
+  }
 })
 // @desc        Fetch single product
 // @route       GET /api/products/:id
@@ -73,15 +78,8 @@ const createProduct = asyncHandler(async (req, res) => {
 // @route       PUT /api/products/:id
 // @access      Private / Admin
 const updateProduct = asyncHandler(async (req, res) => {
-  const {
-    name,
-    price,
-    description,
-    image,
-    brand,
-    category,
-    countInStock,
-  } = req.body
+  const { name, price, description, image, brand, category, countInStock } =
+    req.body
 
   const product = await Product.findById(req.params.id)
   if (product) {

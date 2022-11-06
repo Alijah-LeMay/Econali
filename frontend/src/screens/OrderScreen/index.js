@@ -92,7 +92,7 @@ const OrderScreen = ({ match, history }) => {
     <Fragment>
       <h1>Order {order._id}</h1>
       <Row>
-        <Col md={8}>
+        <Col md={7}>
           <ListGroup variant='flush'>
             <ListGroup.Item>
               <h2>Shipping</h2>
@@ -114,7 +114,7 @@ const OrderScreen = ({ match, history }) => {
                   Delivered on {order.deliveredAt}
                 </Message>
               ) : (
-                <Message variant='danger'>Not Delivered</Message>
+                <Message variant='danger'>Awaiting Payment</Message>
               )}
             </ListGroup.Item>
 
@@ -127,44 +127,49 @@ const OrderScreen = ({ match, history }) => {
               {order.isPaid ? (
                 <Message variant='success'>Paid on {order.paidAt}</Message>
               ) : (
-                <Message variant='danger'>Not Paid</Message>
+                <Message variant='danger'>Awaiting Payment</Message>
               )}
             </ListGroup.Item>
 
             <ListGroup.Item>
               <h2>Order Items</h2>
-              {order.orderItems.length === 0 ? (
-                <Message>Order is empty</Message>
-              ) : (
-                <ListGroup variant='flush'>
-                  {order.orderItems.map((item, index) => (
-                    <ListGroup.Item key={index}>
-                      <Row>
-                        <Col md={1}>
-                          <Image
-                            src={item.image}
-                            alt={item.name}
-                            fluid
-                            rounded
-                          />
-                        </Col>
-                        <Col>
-                          <Link to={`/product/${item.product}`}>
-                            {item.name}
-                          </Link>
-                        </Col>
-                        <Col md={4}>
-                          {item.qty} x ${item.price} = ${item.qty * item.price}
-                        </Col>
-                      </Row>
-                    </ListGroup.Item>
-                  ))}
-                </ListGroup>
-              )}
+              {order ? (
+                <>
+                  {order.orderItems.length === 0 ? (
+                    <Message>Order is empty</Message>
+                  ) : (
+                    <ListGroup variant='flush'>
+                      {order.orderItems.map((item, index) => (
+                        <ListGroup.Item key={index}>
+                          <Row>
+                            <Col md={1}>
+                              <Image
+                                src={item.image}
+                                alt={item.name}
+                                fluid
+                                rounded
+                              />
+                            </Col>
+                            <Col>
+                              <Link to={`/product/${item.product}`}>
+                                {item.name}
+                              </Link>
+                            </Col>
+                            <Col md={4}>
+                              {item.qty} x ${item.price} = $
+                              {item.qty * item.price}
+                            </Col>
+                          </Row>
+                        </ListGroup.Item>
+                      ))}
+                    </ListGroup>
+                  )}
+                </>
+              ) : null}
             </ListGroup.Item>
           </ListGroup>
         </Col>
-        <Col md={4}>
+        <Col md={5}>
           <Card>
             <ListGroup variant='flush'>
               <ListGroup.Item>
