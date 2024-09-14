@@ -10,6 +10,7 @@ import { logout } from '../../store/actions/userActions'
 
 // My Components
 import SearchBox from '../SearchBox'
+import { logoText } from '../Assets/Constants'
 
 const Header = (props) => {
   const { history } = props
@@ -27,7 +28,7 @@ const Header = (props) => {
       <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
-            <Navbar.Brand>Econali</Navbar.Brand>
+            <Navbar.Brand>{logoText}</Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
