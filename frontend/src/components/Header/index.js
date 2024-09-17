@@ -10,7 +10,7 @@ import { logout } from '../../store/actions/userActions'
 
 // My Components
 import SearchBox from '../SearchBox'
-import { logoText } from '../Assets/Constants'
+import { logoText, secondaryColor } from '../Assets/Constants'
 
 const Header = (props) => {
   const { history } = props
@@ -25,7 +25,12 @@ const Header = (props) => {
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar
+        style={{ backgroundColor: secondaryColor }}
+        variant='dark'
+        expand='lg'
+        collapseOnSelect
+      >
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>{logoText}</Navbar.Brand>

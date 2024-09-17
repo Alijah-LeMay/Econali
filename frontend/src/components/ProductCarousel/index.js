@@ -9,6 +9,7 @@ import Message from '../Message'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { listTopProducts } from '../../store/actions/productActions'
+import { primaryColor } from '../Assets/Constants'
 const ProductCarousel = () => {
   const dispatch = useDispatch()
   const productTopRated = useSelector((state) => state.productTopRated)
@@ -22,7 +23,11 @@ const ProductCarousel = () => {
   ) : error ? (
     <Message variant='danger'>{error}</Message>
   ) : (
-    <Carousel pause='hover' className='bg-dark'>
+    <Carousel
+      pause='hover'
+      // className='bg-dark'
+      style={{ backgroundColor: primaryColor }}
+    >
       {products.map((product) => (
         <Carousel.Item key={product._id}>
           <Link to={`/product/${product._id}`}>

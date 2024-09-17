@@ -1,47 +1,50 @@
-import React, { Fragment, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { Fragment, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
-import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap';
+import { Button, Row, Col, ListGroup, Image, Card } from 'react-bootstrap'
 
 // Redux
-import { useDispatch, useSelector } from 'react-redux';
-import { createOrder } from '../../store/actions/orderActions';
+import { useDispatch, useSelector } from 'react-redux'
+import { createOrder } from '../../store/actions/orderActions'
 
 // My Components
-import Message from '../../components/Message';
-import CheckoutSteps from '../../components/CheckoutSteps/index';
+import Message from '../../components/Message'
+import CheckoutSteps from '../../components/CheckoutSteps/index'
+import { defaultShippingCost } from '../../components/Assets/Constants'
 const PlaceOrderScreen = ({ history }) => {
-  const dispatch = useDispatch();
-  const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch()
+  const cart = useSelector((state) => state.cart)
 
   //   Calculate Prices
   const addDecimals = (num) => {
-    return (Math.round(num * 100) / 100).toFixed(2);
-  };
+    return (Math.round(num * 100) / 100).toFixed(2)
+  }
 
   cart.itemsPrice = addDecimals(
     cart.cartItems.reduce((acc, item) => acc + item.price * item.qty, 0)
-  );
+  )
   //   Shipping Price is very basic right now
-  cart.shippingPrice = addDecimals(cart.itemsPrice > 100 ? 0 : 100);
+  cart.shippingPrice = addDecimals(
+    cart.itemsPrice > 100 ? 0 : defaultShippingCost
+  )
   // Tax price
-  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)));
+  cart.taxPrice = addDecimals(Number((0.15 * cart.itemsPrice).toFixed(2)))
 
   cart.totalPrice = (
     Number(cart.itemsPrice) +
     Number(cart.shippingPrice) +
     Number(cart.taxPrice)
-  ).toFixed(2);
+  ).toFixed(2)
 
-  const orderCreate = useSelector((state) => state.orderCreate);
-  const { order, success, error } = orderCreate;
+  const orderCreate = useSelector((state) => state.orderCreate)
+  const { order, success, error } = orderCreate
 
   useEffect(() => {
     if (success) {
-      history.push(`/order/${order._id}`);
+      history.push(`/order/${order._id}`)
     }
     // eslint-disable-next-line
-  }, [history, success]);
+  }, [history, success])
   const placeOrderHandler = () => {
     dispatch(
       createOrder({
@@ -53,8 +56,8 @@ const PlaceOrderScreen = ({ history }) => {
         taxPrice: cart.taxPrice,
         totalPrice: cart.totalPrice,
       })
-    );
-  };
+    )
+  }
 
   return (
     <Fragment>
@@ -158,7 +161,7 @@ const PlaceOrderScreen = ({ history }) => {
         </Col>
       </Row>
     </Fragment>
-  );
-};
+  )
+}
 
-export default PlaceOrderScreen;
+export default PlaceOrderScreen
