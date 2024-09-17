@@ -29,10 +29,17 @@ app.use('/api/upload', uploadRoutes)
 
 // config route for paypal
 app.get('/api/config/paypal', (req, res) => {
-  if (process.env.NODE_ENV === 'PRODUCTION' || 'production') {
+  if (
+    process.env.NODE_ENV === 'PRODUCTION' ||
+    process.env.NODE_ENV === 'production'
+  ) {
     res.send(process.env.PAYPAL_LIVE_ID)
+    console.log('using live paypal id')
+    return
   }
+  console.log('using test paypal id')
   res.send(process.env.PAYPAL_TEST_ID)
+  return
 })
 
 const __dirname = path.resolve()
@@ -43,10 +50,12 @@ if (process.env.NODE_ENV === 'production') {
 
   app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+    return
   })
 } else {
   app.get('/', (req, res) => {
     res.send('API is running...')
+    return
   })
 }
 

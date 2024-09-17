@@ -23,6 +23,7 @@ const getProducts = asyncHandler(async (req, res) => {
 
   if (products) {
     res.json({ products, page, pages: Math.ceil(count / pageSize) })
+    return
   } else {
     res.status(404)
     throw new Error('ProductS not found')
@@ -35,6 +36,7 @@ const getProductById = asyncHandler(async (req, res) => {
   const product = await Product.findById(req.params.id)
   if (product) {
     res.json(product)
+    return
   } else {
     res.status(404)
     throw new Error('Product not found')
@@ -48,6 +50,7 @@ const deleteProduct = asyncHandler(async (req, res) => {
   if (product) {
     await product.remove()
     res.json({ message: 'Product Removed' })
+    return
   } else {
     res.status(404)
     throw new Error('Product not found')
@@ -72,6 +75,7 @@ const createProduct = asyncHandler(async (req, res) => {
 
   const createdProduct = await product.save()
   res.status(201).json(createdProduct)
+  return
 })
 
 // @desc        Update a product
@@ -93,6 +97,7 @@ const updateProduct = asyncHandler(async (req, res) => {
 
     const updatedProduct = await product.save()
     res.status(201).json(updatedProduct)
+    return
   } else {
     res.status(404)
     throw new Error('Product not found')
@@ -129,6 +134,7 @@ const createProductReview = asyncHandler(async (req, res) => {
     await product.save()
 
     res.status(201).json({ message: 'Review Added' })
+    return
   } else {
     res.status(404)
     throw new Error('Product not found')
@@ -141,6 +147,7 @@ const createProductReview = asyncHandler(async (req, res) => {
 const getTopProducts = asyncHandler(async (req, res) => {
   const products = await Product.find({}).sort({ rating: -1 }).limit(3)
   res.json(products)
+  return
 })
 
 export {
